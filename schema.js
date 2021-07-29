@@ -5,12 +5,45 @@ const schema = buildSchema(`
         id: ID
         firstName: String
         lastName: String
-        gender: String
+        gender: Gender
+        age: Int
         email: String
+        contacts: [Contacts]
     }
 
+    enum Gender {
+        MALE
+        FEMALE
+        OTHER
+    }
+
+    type Contacts {
+        firstName: String
+        lastName: String
+    }
+
+    
     type Query {
-        friend: Friend  
+        getFriend(id: ID): Friend  
+    }
+
+    input FriendInput {
+        id: ID,
+        firstName: String
+        lastName: String
+        gender: Gender
+        age:Int
+        email: String
+        contacts: [ContactsInput]
+    }
+
+    input ContactsInput {
+        firstName: String
+        lastName: String
+    }
+
+    type Mutation {
+        createFriend(input: FriendInput) : Friend
     }
 `)
 module.exports = schema
